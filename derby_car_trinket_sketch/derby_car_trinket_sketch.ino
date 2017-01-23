@@ -18,7 +18,7 @@
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, PIN, NEO_GRBW + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_PIXELS, PIN, NEO_GRBW + NEO_KHZ800);
 
 // IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
 // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
@@ -35,10 +35,6 @@ void setup() {
   if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
 #endif
   // End of trinket special code
-
-  x = -1;
-  y = -1;
-  z = -1;
 
   strip.begin();
   strip.setBrightness(50);
@@ -80,43 +76,23 @@ void loop() {
   Serial.println();
 
   if (fabs(x - event.acceleration.x) > 2 || fabs(y - event.acceleration.y) > 2 || fabs(z - event.acceleration.z) > 2) {
-    // Send a theater pixel chase in...
-    //    theaterChase(strip.Color(127, 127, 127), 50); // White
-    //    theaterChase(strip.Color(127, 0, 0), 50); // Red
-    //    theaterChase(strip.Color(0, 0, 127), 50); // Blue
-    larsonScanner(strip.Color(127, 0, 0), 50);
+    for (int i = 0; i < 10; i++) {
+      larsonScanner(strip.Color(127, 0, 0), 50);
+    }
   }
   x = event.acceleration.x;
   y = event.acceleration.y;
   z = event.acceleration.z;
 }
 
-//Theatre-style crawling lights.
-void theaterChase(uint32_t c, uint8_t wait) {
-  for (int j = 0; j < 10; j++) { //do 10 cycles of chasing
-    for (int q = 0; q < 3; q++) {
-      for (uint16_t i = 0; i < strip.numPixels(); i = i + 3) {
-        strip.setPixelColor(i + q, c);  //turn every third pixel on
-      }
-      strip.show();
-
-      delay(wait);
-
-      for (uint16_t i = 0; i < strip.numPixels(); i = i + 3) {
-        strip.setPixelColor(i + q, 0);      //turn every third pixel off
-      }
-    }
-  }
-  strip.show(); // Initialize all pixels to 'off'
-}
-
 // Larson Scanner
+// Inspired by:
 // https://learn.adafruit.com/larson-scanner-shades/software
 void larsonScanner(uint32_t c, uint8_t wait) {
   int pos = 0, dir = 1; // Position, direction of "eye"
-  int iteration;
 
-  for (iteration = 0; iteration < 300; iteration++) {
+  // do one scan out-and-back
+  while (pos >= 0) {
     int j;
     // Draw 5 pixels centered on pos.  setPixelColor() will clip any
     // pixels off the ends of the strip, we don't need to watch for that.
@@ -135,10 +111,7 @@ void larsonScanner(uint32_t c, uint8_t wait) {
 
     // Bounce off ends of strip
     pos += dir;
-    if (pos < 0) {
-      pos = 1;
-      dir = -dir;
-    } else if (pos >= NUM_PIXELS) {
+    if (pos >= NUM_PIXELS) {
       pos = NUM_PIXELS - 2;
       dir = -dir;
     }
