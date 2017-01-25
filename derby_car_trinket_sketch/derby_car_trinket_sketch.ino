@@ -75,7 +75,7 @@ void loop() {
 
   Serial.println();
 
-  if (fabs(x - event.acceleration.x) > 2 || fabs(y - event.acceleration.y) > 2 || fabs(z - event.acceleration.z) > 2) {
+  if (fabs(y - event.acceleration.y) > 2) {
     for (int i = 0; i < 5; i++) {
       larsonScanner(strip.Color(127, 0, 0), 50);
     }
