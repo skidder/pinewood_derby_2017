@@ -9,6 +9,7 @@
 
 #define PIN 6
 #define NUM_PIXELS 24
+#define BRIGHTNESS 150
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
@@ -37,7 +38,7 @@ void setup() {
   // End of trinket special code
 
   strip.begin();
-  strip.setBrightness(50);
+  strip.setBrightness(BRIGHTNESS);
   strip.show(); // Initialize all pixels to 'off'
 
   // accelerometer setup
