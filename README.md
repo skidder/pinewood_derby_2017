@@ -12,7 +12,7 @@ Fritzing file: **Derby Car - Arduino Uno.fzz**
 
 We used an Arduino Uno to prototype the circuit. The Uno is breadboard-friendly and easy to work with. We moved to the Adafruit Trinket Pro once we finalized the circuit design and behavior.
 
-![Arduino Uno circuit](images/Derby Car - Arduino Uno_bb.png)
+![Arduino Uno circuit](images/Derby%20Car%20-%20Arduino%20Uno_bb.png)
 
 
 ### Adafruit Trinket Pro
@@ -21,7 +21,7 @@ Fritzing file: **Derby Car - Trinket.fzz**
 
 We used the Adafruit Trinket Pro to power the final design. It's significantly smaller in size compared to the full-blown Arduino and features all of the pins we'd need to access the accelerometer and control the LEDs. The smaller, but less powerful, Adafruit Trinket did not have sufficient memory to hold our program with libraries we needed.
 
-![Adafruit Trinket Pro circuit](images/Derby Car - Trinket_bb.png)
+![Adafruit Trinket Pro circuit](images/Derby%20Car%20-%20Trinket_bb.png)
 
 ![Overhead View of final circuit](images/overhead_view.jpg)
 
